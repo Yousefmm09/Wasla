@@ -11,4 +11,8 @@
     <ProjectReference Include="..\Wasla.Infrustructure\Wasla.Infrustructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Immplementation\" />
+  </ItemGroup>
+
 </Project>

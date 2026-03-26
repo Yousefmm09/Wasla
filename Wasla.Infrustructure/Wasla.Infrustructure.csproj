@@ -11,16 +11,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Config\" />
-    <Folder Include="DTOs\Auth\" />
-    <Folder Include="DTOs\Projects\" />
-    <Folder Include="DTOs\Proposals\" />
-    <Folder Include="DTOs\Contracts\" />
-    <Folder Include="DTOs\Reviews\" />
-    <Folder Include="DTOs\Wallet\" />
-    <Folder Include="DTOs\AI\" />
-    <Folder Include="DTOs\Admin\" />
-    <Folder Include="DTOs\Common\" />
+    <Folder Include="Abstract\Services\" />
+    <Folder Include="Abstract\Repositories\" />
+    <Folder Include="Abstract\" />
+    <Folder Include="Immplementation\" />
   </ItemGroup>
 
   <ItemGroup>
