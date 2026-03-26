@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Wasla.Core/Wasla.Core.csproj" />
+  <Project Path="Wasla.Data/Wasla.Data.csproj" />
+  <Project Path="Wasla.Infrustructure/Wasla.Infrustructure.csproj" />
+  <Project Path="Wasla.Service/Wasla.Service.csproj" />
+  <Project Path="Wasla/Wasla.Api.csproj" />
+</Solution>

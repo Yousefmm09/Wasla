@@ -1,0 +1,43 @@
+# =========================
+# .NET Core / ASP.NET
+# =========================
+bin/
+obj/
+out/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Rider / VSCode
+.idea/
+.vscode/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+
+# EF Core
+Migrations/*/bin/
+Migrations/*/obj/
+
+# Build results
+*.dll
+*.exe
+*.pdb
+
+# ASP.NET specific
+wwwroot/lib/
+
+# Node (لو عندك frontend)
+node_modules/
+dist/
