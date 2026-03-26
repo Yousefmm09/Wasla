@@ -2,7 +2,7 @@ namespace Wasla.Infrustructure.DTOs.Wallet;
 
 public class TransactionResponse
 {
-    public Guid Id { get; set; }
+    public int Id { get; set; }
     public decimal Amount { get; set; }
 
     // "TopUp" | "Escrow" | "Release" | "Refund"
@@ -10,6 +10,6 @@ public class TransactionResponse
     public string Description { get; set; } = string.Empty;
 
     // null for TopUp transactions
-    public Guid? ContractId { get; set; }
-    public DateTime CreatedAt { get; set; }
+    public int? ContractId { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
 }
