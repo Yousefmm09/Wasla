@@ -18,6 +18,7 @@ namespace Wasla.Infrustructure.Context
         public DbSet<Proposal> Proposals { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Wallet> Wallets { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<WalletTransaction> WalletTransactions { get; set; }
 
 
@@ -27,7 +28,7 @@ namespace Wasla.Infrustructure.Context
         }
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.HasDefaultSchema("app");
+            builder.HasDefaultSchema("public");
 
             builder.Entity<User>().HasIndex(u => u.PhoneNumber).IsUnique();
             builder.Entity<User>().HasIndex(u => u.Email).IsUnique();
@@ -58,6 +59,13 @@ namespace Wasla.Infrustructure.Context
                 .WithOne(t => t.Contract)
                 .HasForeignKey(t => t.ContractId)
                 .OnDelete(DeleteBehavior.SetNull);
+            builder.Entity<RefreshToken>(entity =>
+            {
+                entity.HasOne(rt => rt.User)
+                      .WithMany()
+                      .HasForeignKey(rt => rt.UserId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
             builder.Entity<Contract>(entity =>
             {
                 // Client Relationship

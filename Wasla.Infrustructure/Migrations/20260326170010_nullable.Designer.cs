@@ -13,15 +13,15 @@ using Wasla.Infrustructure.Context;
 namespace Wasla.Infrustructure.Migrations
 {
     [DbContext(typeof(AppDb))]
-    [Migration("20260325130742_InitCreat")]
-    partial class InitCreat
+    [Migration("20260326170010_nullable")]
+    partial class nullable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("app")
+                .HasDefaultSchema("public")
                 .HasAnnotation("ProductVersion", "9.0.14")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -50,7 +50,7 @@ namespace Wasla.Infrustructure.Migrations
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
 
-                    b.ToTable("AspNetRoles", "app");
+                    b.ToTable("AspNetRoles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -75,7 +75,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", "app");
+                    b.ToTable("AspNetRoleClaims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -100,7 +100,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", "app");
+                    b.ToTable("AspNetUserClaims", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -122,7 +122,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", "app");
+                    b.ToTable("AspNetUserLogins", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -137,7 +137,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", "app");
+                    b.ToTable("AspNetUserRoles", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -156,7 +156,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", "app");
+                    b.ToTable("AspNetUserTokens", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Contract", b =>
@@ -224,7 +224,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Contracts", "app");
+                    b.ToTable("Contracts", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Project", b =>
@@ -276,7 +276,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("ClientId1");
 
-                    b.ToTable("Projects", "app");
+                    b.ToTable("Projects", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Proposal", b =>
@@ -318,7 +318,48 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("ProjectId");
 
-                    b.ToTable("Proposals", "app");
+                    b.ToTable("Proposals", "public");
+                });
+
+            modelBuilder.Entity("Wasla.Data.Entite.RefreshToken", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedByIp")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ReplacedByToken")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("RevokedByIp")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Review", b =>
@@ -368,7 +409,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("UserId1");
 
-                    b.ToTable("Reviews", "app");
+                    b.ToTable("Reviews", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.User", b =>
@@ -425,11 +466,14 @@ namespace Wasla.Infrustructure.Migrations
                     b.Property<int>("ReviewCount")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("text");
 
                     b.PrimitiveCollection<List<string>>("Skills")
-                        .IsRequired()
                         .HasColumnType("text[]");
 
                     b.Property<bool>("TwoFactorEnabled")
@@ -456,7 +500,7 @@ namespace Wasla.Infrustructure.Migrations
                     b.HasIndex("PhoneNumber")
                         .IsUnique();
 
-                    b.ToTable("AspNetUsers", "app");
+                    b.ToTable("AspNetUsers", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Wallet", b =>
@@ -488,7 +532,7 @@ namespace Wasla.Infrustructure.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Wallets", "app");
+                    b.ToTable("Wallets", "public");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.WalletTransaction", b =>
@@ -524,7 +568,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasIndex("WalletId");
 
-                    b.ToTable("WalletTransactions", "app");
+                    b.ToTable("WalletTransactions", "public");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -645,6 +689,17 @@ namespace Wasla.Infrustructure.Migrations
                     b.Navigation("Freelancer");
 
                     b.Navigation("Project");
+                });
+
+            modelBuilder.Entity("Wasla.Data.Entite.RefreshToken", b =>
+                {
+                    b.HasOne("Wasla.Data.Entite.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Wasla.Data.Entite.Review", b =>

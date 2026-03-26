@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Wasla.Service.Abstract.Services;
+using Wasla.Service.Immplementation;
 
 namespace Wasla.Service
 {
@@ -11,7 +13,9 @@ namespace Wasla.Service
     {
             public static IServiceCollection AddModuleService(this IServiceCollection services)
             {
-                return services;
+            services.AddScoped<IAuthService, AuthService>();
+
+            return services;
         }
     }
 }

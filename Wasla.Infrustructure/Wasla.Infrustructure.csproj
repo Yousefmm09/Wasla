@@ -8,16 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wasla.Data\Wasla.Data.csproj" />
+    <ProjectReference Include="..\Wasla.Service\Wasla.Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Abstract\Services\" />
-    <Folder Include="Abstract\Repositories\" />
-    <Folder Include="Abstract\" />
-    <Folder Include="Immplementation\" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.14">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

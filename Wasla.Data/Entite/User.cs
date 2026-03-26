@@ -10,12 +10,13 @@ namespace Wasla.Data.Entite
 {
     public class User:IdentityUser
     {
-        public List<string> Skills { get; set; } = new();
+        public List<string>? Skills { get; set; } = new();
 
         // Calculated from Reviews
         public double Rating { get; set; } = 0.0;
         public int ReviewCount { get; set; } = 0;
         public bool IsBanned { get; set; } = false;
+        public string Role { get; set; } = string.Empty;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         // ── Navigation Properties ─────────────────────────

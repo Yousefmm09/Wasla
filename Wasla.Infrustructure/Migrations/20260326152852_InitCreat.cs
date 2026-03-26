@@ -14,11 +14,11 @@ namespace Wasla.Infrustructure.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
-                name: "app");
+                name: "public");
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
@@ -33,14 +33,15 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "text", nullable: false),
-                    Skills = table.Column<List<string>>(type: "text[]", nullable: false),
+                    Skills = table.Column<List<string>>(type: "text[]", nullable: true),
                     Rating = table.Column<double>(type: "double precision", nullable: false),
                     ReviewCount = table.Column<int>(type: "integer", nullable: false),
                     IsBanned = table.Column<bool>(type: "boolean", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -64,7 +65,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -79,7 +80,7 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -87,7 +88,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -102,7 +103,7 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -110,7 +111,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "text", nullable: false),
@@ -124,7 +125,7 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -132,7 +133,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -144,14 +145,14 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -159,7 +160,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
@@ -173,7 +174,7 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -181,7 +182,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Projects",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -204,14 +205,42 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_Projects_AspNetUsers_ClientId1",
                         column: x => x.ClientId1,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                schema: "public",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    UserId = table.Column<string>(type: "text", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: false),
+                    Expires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedByIp = table.Column<string>(type: "text", nullable: false),
+                    Revoked = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    RevokedByIp = table.Column<string>(type: "text", nullable: false),
+                    ReplacedByToken = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalSchema: "public",
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Wallets",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -228,7 +257,7 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_Wallets_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -236,7 +265,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Proposals",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -256,13 +285,13 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_Proposals_AspNetUsers_FreelancerId1",
                         column: x => x.FreelancerId1,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Proposals_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -270,7 +299,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Contracts",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -295,40 +324,40 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_Contracts_AspNetUsers_ClientId",
                         column: x => x.ClientId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contracts_AspNetUsers_FreelancerId",
                         column: x => x.FreelancerId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contracts_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Contracts_AspNetUsers_UserId1",
                         column: x => x.UserId1,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Contracts_Projects_ProjectId",
                         column: x => x.ProjectId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Projects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Contracts_Proposals_ProposalId",
                         column: x => x.ProposalId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Proposals",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -336,7 +365,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Reviews",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -356,33 +385,33 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_RevieweeId",
                         column: x => x.RevieweeId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_ReviewerId",
                         column: x => x.ReviewerId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_AspNetUsers_UserId1",
                         column: x => x.UserId1,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Contracts_ContractId",
                         column: x => x.ContractId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Contracts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -390,7 +419,7 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateTable(
                 name: "WalletTransactions",
-                schema: "app",
+                schema: "public",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -408,14 +437,14 @@ namespace Wasla.Infrustructure.Migrations
                     table.ForeignKey(
                         name: "FK_WalletTransactions_Contracts_ContractId",
                         column: x => x.ContractId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Contracts",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
                     table.ForeignKey(
                         name: "FK_WalletTransactions_Wallets_WalletId",
                         column: x => x.WalletId,
-                        principalSchema: "app",
+                        principalSchema: "public",
                         principalTable: "Wallets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -423,170 +452,176 @@ namespace Wasla.Infrustructure.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
-                schema: "app",
+                schema: "public",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
-                schema: "app",
+                schema: "public",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_Email",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "Email",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_Id",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "Id");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUsers_PhoneNumber",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "PhoneNumber",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
-                schema: "app",
+                schema: "public",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ClientId",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_FreelancerId",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "FreelancerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ProjectId",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "ProjectId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_ProposalId",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "ProposalId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_UserId",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contracts_UserId1",
-                schema: "app",
+                schema: "public",
                 table: "Contracts",
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Projects_ClientId1",
-                schema: "app",
+                schema: "public",
                 table: "Projects",
                 column: "ClientId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proposals_FreelancerId1",
-                schema: "app",
+                schema: "public",
                 table: "Proposals",
                 column: "FreelancerId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proposals_ProjectId",
-                schema: "app",
+                schema: "public",
                 table: "Proposals",
                 column: "ProjectId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                schema: "public",
+                table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ContractId",
-                schema: "app",
+                schema: "public",
                 table: "Reviews",
                 column: "ContractId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_RevieweeId",
-                schema: "app",
+                schema: "public",
                 table: "Reviews",
                 column: "RevieweeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ReviewerId",
-                schema: "app",
+                schema: "public",
                 table: "Reviews",
                 column: "ReviewerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
-                schema: "app",
+                schema: "public",
                 table: "Reviews",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId1",
-                schema: "app",
+                schema: "public",
                 table: "Reviews",
                 column: "UserId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Wallets_UserId",
-                schema: "app",
+                schema: "public",
                 table: "Wallets",
                 column: "UserId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_WalletTransactions_ContractId",
-                schema: "app",
+                schema: "public",
                 table: "WalletTransactions",
                 column: "ContractId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_WalletTransactions_WalletId",
-                schema: "app",
+                schema: "public",
                 table: "WalletTransactions",
                 column: "WalletId");
         }
@@ -596,55 +631,59 @@ namespace Wasla.Infrustructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserClaims",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserLogins",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserRoles",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens",
-                schema: "app");
+                schema: "public");
+
+            migrationBuilder.DropTable(
+                name: "RefreshTokens",
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "Reviews",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "WalletTransactions",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "Contracts",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "Wallets",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "Proposals",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "Projects",
-                schema: "app");
+                schema: "public");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers",
-                schema: "app");
+                schema: "public");
         }
     }
 }

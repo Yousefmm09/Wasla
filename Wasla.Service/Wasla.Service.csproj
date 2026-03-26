@@ -8,11 +8,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Wasla.Data\Wasla.Data.csproj" />
-    <ProjectReference Include="..\Wasla.Infrustructure\Wasla.Infrustructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Immplementation\" />
+    <None Include="Abstract\Repositories\IAuthRepo.cs" />
   </ItemGroup>
 
 </Project>
