@@ -21,6 +21,7 @@ namespace Wasla.Infrustructure
         public static IServiceCollection AddModuleServiceInfrustructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IAuthRepo, AuthRepo>();
+            services.AddScoped<IProjectRepo,ProjectRepo>();
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 // Password settings

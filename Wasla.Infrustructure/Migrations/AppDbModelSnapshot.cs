@@ -294,10 +294,8 @@ namespace Wasla.Infrustructure.Migrations
                     b.Property<int>("EstimatedDays")
                         .HasColumnType("integer");
 
-                    b.Property<int>("FreelancerId")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("FreelancerId1")
+                    b.Property<string>("FreelancerId")
+                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<int>("ProjectId")
@@ -311,7 +309,7 @@ namespace Wasla.Infrustructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("FreelancerId1");
+                    b.HasIndex("FreelancerId");
 
                     b.HasIndex("ProjectId");
 
@@ -675,7 +673,9 @@ namespace Wasla.Infrustructure.Migrations
                 {
                     b.HasOne("Wasla.Data.Entite.User", "Freelancer")
                         .WithMany("Proposals")
-                        .HasForeignKey("FreelancerId1");
+                        .HasForeignKey("FreelancerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Wasla.Data.Entite.Project", "Project")
                         .WithMany("Proposals")

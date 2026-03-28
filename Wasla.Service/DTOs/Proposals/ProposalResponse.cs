@@ -12,7 +12,7 @@ public class ProposalResponse
     public DateTimeOffset CreatedAt { get; set; }
 
     // Freelancer info (shown to client when reviewing proposals)
-    public int FreelancerId { get; set; }
+    public string FreelancerId { get; set; }
     public string FreelancerName { get; set; } = string.Empty;
     public double FreelancerRating { get; set; }
     public List<string> FreelancerSkills { get; set; } = new();

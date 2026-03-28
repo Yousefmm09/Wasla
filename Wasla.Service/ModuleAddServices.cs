@@ -14,6 +14,7 @@ namespace Wasla.Service
             public static IServiceCollection AddModuleService(this IServiceCollection services)
             {
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IProjectSerivce, ProjectSerivce>();
 
             return services;
         }

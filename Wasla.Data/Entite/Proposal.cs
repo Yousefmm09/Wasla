@@ -10,7 +10,7 @@ namespace Wasla.Data.Entite
     {
         public int Id { get; set; }
         public int ProjectId { get; set; }
-        public int FreelancerId { get; set; }
+        public string FreelancerId { get; set; }
         public string CoverLetter { get; set; } = string.Empty;
         public decimal ProposedBudget { get; set; }
         public int EstimatedDays { get; set; }

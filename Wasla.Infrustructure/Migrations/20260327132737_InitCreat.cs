@@ -221,10 +221,10 @@ namespace Wasla.Infrustructure.Migrations
                     Token = table.Column<string>(type: "text", nullable: false),
                     Expires = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    CreatedByIp = table.Column<string>(type: "text", nullable: false),
+                    CreatedByIp = table.Column<string>(type: "text", nullable: true),
                     Revoked = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    RevokedByIp = table.Column<string>(type: "text", nullable: false),
-                    ReplacedByToken = table.Column<string>(type: "text", nullable: false)
+                    RevokedByIp = table.Column<string>(type: "text", nullable: true),
+                    ReplacedByToken = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -271,23 +271,23 @@ namespace Wasla.Infrustructure.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     ProjectId = table.Column<int>(type: "integer", nullable: false),
-                    FreelancerId = table.Column<int>(type: "integer", nullable: false),
+                    FreelancerId = table.Column<string>(type: "text", nullable: false),
                     CoverLetter = table.Column<string>(type: "text", nullable: false),
                     ProposedBudget = table.Column<decimal>(type: "numeric", nullable: false),
                     EstimatedDays = table.Column<int>(type: "integer", nullable: false),
                     Status = table.Column<int>(type: "integer", nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    FreelancerId1 = table.Column<string>(type: "text", nullable: true)
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Proposals", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Proposals_AspNetUsers_FreelancerId1",
-                        column: x => x.FreelancerId1,
+                        name: "FK_Proposals_AspNetUsers_FreelancerId",
+                        column: x => x.FreelancerId,
                         principalSchema: "public",
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Proposals_Projects_ProjectId",
                         column: x => x.ProjectId,
@@ -559,10 +559,10 @@ namespace Wasla.Infrustructure.Migrations
                 column: "ClientId1");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Proposals_FreelancerId1",
+                name: "IX_Proposals_FreelancerId",
                 schema: "public",
                 table: "Proposals",
-                column: "FreelancerId1");
+                column: "FreelancerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Proposals_ProjectId",
