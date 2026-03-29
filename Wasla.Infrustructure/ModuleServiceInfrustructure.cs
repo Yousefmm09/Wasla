@@ -9,10 +9,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Wasla.Api;
 using Wasla.Data.Entite;
 using Wasla.Infrustructure.Context;
 using Wasla.Infrustructure.Immplementation;
 using Wasla.Service.Abstract.Repositories;
+using Wasla.Service.Immplementation;
 
 namespace Wasla.Infrustructure
 {
@@ -22,6 +24,7 @@ namespace Wasla.Infrustructure
         {
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IProjectRepo,ProjectRepo>();
+            services.AddScoped<IReviewRepo,ReviewRepo>();
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 // Password settings
