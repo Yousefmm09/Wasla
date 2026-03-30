@@ -1,10 +1,8 @@
-using Wasla.Data.Entite;
-
 namespace Wasla.Service.DTOs.Contracts;
 
-public class ContractResponse
+public class ContractRequest
 {
-    public ContractStatus Status { get; set; }
+    public string Status { get; set; } = string.Empty;
     public decimal AgreedBudget { get; set; }
     public string? DeliveryNote { get; set; }
     public string? DisputeReason { get; set; }
@@ -13,9 +11,12 @@ public class ContractResponse
     public DateTimeOffset? CompletedAt { get; set; }
 
     // Project info
+    public int ProjectId { get; set; }
     public string ProjectTitle { get; set; } = string.Empty;
 
     // Parties
+    public int ClientId { get; set; }
     public string ClientName { get; set; } = string.Empty;
+    public int FreelancerId { get; set; }
     public string FreelancerName { get; set; } = string.Empty;
 }

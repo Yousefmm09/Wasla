@@ -25,6 +25,8 @@ namespace Wasla.Infrustructure
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IProjectRepo,ProjectRepo>();
             services.AddScoped<IReviewRepo,ReviewRepo>();
+            services.AddScoped<IContractRepo,ContractRepo>();
+            services.AddScoped<IWalletRepo,WalletRepo>();
             services.AddIdentity<User, IdentityRole>(options =>
             {
                 // Password settings

@@ -16,6 +16,8 @@ namespace Wasla.Service
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IProjectSerivce, ProjectSerivce>();
             services.AddScoped<IReviewSerivce, ReviewService>();
+            services.AddScoped<IContractService, ContractService>();
+            services.AddScoped<IWalletSerivce, WalletService>();
 
             return services;
         }
